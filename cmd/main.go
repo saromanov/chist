@@ -7,7 +7,7 @@ var (
 )
 
 func main() {
-	ch, err := chist.New(zshHistoryPath)
+	ch, err := chist.New(zshHistoryPath,10)
 	if err != nil {
 		panic(err)
 	}
