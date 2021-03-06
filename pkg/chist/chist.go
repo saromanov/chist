@@ -2,9 +2,9 @@ package chist
 
 import (
 	"fmt"
-	"os"
-
 	"github.com/pkg/errors"
+	"github.com/saromanov/chist/pkg/parser"
+	"os"
 )
 
 // Chist defines the main structure of the app
@@ -21,12 +21,15 @@ func New(path string) (*Chist, error) {
 
 		return nil, fmt.Errorf("unable to check file: %v", err)
 	}
-	return &Check{
+	return &Chist{
 		path: path,
 	}, nil
 }
 
 // Do defines the main logic
 func (c *Chist) Do() error {
-
+	parser.Parse(c.path, func(line string){
+		fmt.Println(line)
+	})
+	return nil
 }

@@ -2,14 +2,14 @@ package parser
 
 import (
 	"bufio"
-	"fmt"
-	"strings"
 	"github.com/pkg/errors"
 	"os"
+	"strings"
 )
 
 // Parse provides parsing of history file
-func Parse(path string) error {
+// and returns line to the f
+func Parse(path string, f func(string)) error {
 	file, err := os.Open(path)
 	if err != nil {
 		return errors.Wrap(err, "unable to open file")
@@ -22,7 +22,11 @@ func Parse(path string) error {
 		if len(line) <= 1 {
 			continue
 		}
-		fmt.Println(line[1])
+		res := strings.Split(line[1], " ")
+		if len(res) == 0 {
+			continue
+		}
+		f(res[0])
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -30,5 +34,3 @@ func Parse(path string) error {
 	}
 	return nil
 }
-
-func calc()
