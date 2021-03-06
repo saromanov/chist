@@ -8,8 +8,8 @@ import (
 )
 
 // Parse provides parsing of history file
-func Parse(path, data string) error {
-	file, err := os.Open("/path/to/file.txt")
+func Parse(path string) error {
+	file, err := os.Open(path)
 	if err != nil {
 		return errors.Wrap(err, "unable to open file")
 	}
