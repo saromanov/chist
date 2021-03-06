@@ -3,6 +3,7 @@ package parser
 import (
 	"bufio"
 	"fmt"
+	"strings"
 	"github.com/pkg/errors"
 	"os"
 )
@@ -17,7 +18,11 @@ func Parse(path string) error {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		fmt.Println(scanner.Text())
+		line := strings.Split(scanner.Text(), ";")
+		if len(line) <= 1 {
+			continue
+		}
+		fmt.Println(line[1])
 	}
 
 	if err := scanner.Err(); err != nil {
@@ -25,3 +30,5 @@ func Parse(path string) error {
 	}
 	return nil
 }
+
+func calc()

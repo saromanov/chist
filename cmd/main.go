@@ -3,7 +3,7 @@ package main
 import "github.com/saromanov/chist/pkg/parser"
 
 var (
-	zshHistoryPath = "$GOPATH/.zsh_history"
+	zshHistoryPath = ""
 )
 
 func main(){
