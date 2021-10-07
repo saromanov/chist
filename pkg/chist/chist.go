@@ -26,8 +26,8 @@ type Chist struct {
 }
 
 // New creates app
-func New(path string, limit int) (*Chist, error) {
-	if _, err := os.Stat(path); err != nil {
+func New(cfg Config, limit int) (*Chist, error) {
+	if _, err := os.Stat(cfg.FilePath); err != nil {
 		if os.IsNotExist(err) {
 			return nil, errors.New("file is not exists")
 		}
@@ -35,7 +35,7 @@ func New(path string, limit int) (*Chist, error) {
 		return nil, fmt.Errorf("unable to check file: %v", err)
 	}
 	return &Chist{
-		path: path,
+		path: cfg.FilePath,
 		limit: limit,
 	}, nil
 }
