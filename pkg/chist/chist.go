@@ -25,7 +25,7 @@ type Chist struct {
 	limit int
 }
 
-// New creates app
+// New creates chist app
 func New(cfg Config, limit int) (*Chist, error) {
 	if _, err := os.Stat(cfg.FilePath); err != nil {
 		if os.IsNotExist(err) {
