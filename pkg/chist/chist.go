@@ -6,6 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/saromanov/chist/pkg/parser"
 	"github.com/saromanov/chist/pkg/models"
+	"github.com/saromanov/chist/pkg/output"
 	"os"
 )
 
@@ -14,10 +15,11 @@ import (
 type Chist struct {
 	path string
 	limit int
+	output output.Output
 }
 
 // New creates chist app
-func New(cfg Config, limit int) (*Chist, error) {
+func New(cfg Config, limit int, output output.Output) (*Chist, error) {
 	if cfg.FilePath == "" {
 		return nil, errors.New("filepath is empty")
 	}
@@ -31,6 +33,7 @@ func New(cfg Config, limit int) (*Chist, error) {
 	return &Chist{
 		path: cfg.FilePath,
 		limit: limit,
+		output: output,
 	}, nil
 }
 
@@ -53,6 +56,6 @@ func (c *Chist) Do() error {
 	if len(pl) < c.limit {
 		c.limit = len(pl)
 	}
-	fmt.Println(pl[0:c.limit])
+	c.output.Show(pl[0:c.limit])
 	return nil
 }

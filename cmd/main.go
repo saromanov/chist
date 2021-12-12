@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/saromanov/chist/pkg/chist"
+	"github.com/saromanov/chist/pkg/output/table"
 )
 
 var (
@@ -18,7 +19,8 @@ func parse() chist.Config{
 }
 func main() {
 	cfg := parse()
-	ch, err := chist.New(cfg,10)
+	tab := table.New()
+	ch, err := chist.New(cfg,10, tab)
 	if err != nil {
 		panic(err)
 	}
