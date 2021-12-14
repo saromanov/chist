@@ -2,17 +2,19 @@ package chist
 
 import (
 	"fmt"
+	"os"
 	"sort"
+	"strings"
+
 	"github.com/pkg/errors"
-	"github.com/saromanov/chist/pkg/parser"
 	"github.com/saromanov/chist/pkg/models"
 	"github.com/saromanov/chist/pkg/output"
-	"os"
+	"github.com/saromanov/chist/pkg/parser"
 )
-
 
 // Chist defines the main structure of the app
 type Chist struct {
+	cfg Config
 	path string
 	limit int
 	output output.Output
@@ -34,6 +36,7 @@ func New(cfg Config, limit int, output output.Output) (*Chist, error) {
 		path: cfg.FilePath,
 		limit: limit,
 		output: output,
+		cfg: cfg,
 	}, nil
 }
 
@@ -42,6 +45,11 @@ func (c *Chist) Do() error {
 	res := make(map[string]int)
 	parser.Parse(c.path, func(line string){
 		res[line]++
+	}, func(line string) bool {
+		if c.cfg.Contains != "" {
+			return strings.Contains(line, c.cfg.Contains)
+		}
+		return true
 	})
 	i := 0
 	pl := make(models.PairList, len(res))

@@ -2,19 +2,20 @@ package main
 
 import (
 	"flag"
+
 	"github.com/saromanov/chist/pkg/chist"
 	"github.com/saromanov/chist/pkg/output/table"
 )
 
-var (
-	zshHistoryPath = ""
-)
 
 func parse() chist.Config{
-	filePath := flag.String("path", "zsh", "path to zsh or bash history file")
+	filePath := flag.String("path", "", "path to zsh or bash history file")
+	contains := flag.String("contains", "", "contains part on string")
 	flag.Parse()
+	path := *filePath
 	return chist.Config{
-		FilePath: *filePath,
+		FilePath: path,
+		Contains: *contains,
 	}
 }
 func main() {
